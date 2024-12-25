@@ -12,6 +12,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
 import { FormEventHandler } from "react";
 import { z } from "zod";
+import { useTasks } from "../hooks/useTasks";
 
 const CreateTaskSchema = z.object({
   title: z.string(),
@@ -21,6 +22,7 @@ const CreateTaskSchema = z.object({
 });
 
 export const CreateTaskForm: React.FC = () => {
+  const { createTask } = useTasks();
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (ev) => {
     ev.preventDefault();
 
@@ -38,7 +40,7 @@ export const CreateTaskForm: React.FC = () => {
       status,
       priority,
     });
-    alert(JSON.stringify(taskData));
+    await createTask(taskData);
   };
 
   return (
